@@ -17,13 +17,13 @@ class DownloadCaptions(Step):
             query = urlparse(url).query
             video_id = parse_qs(query)["v"][0]
             if(utils.caption_file_exists(video_id)):
-                print('found existing caption file:' + video_id)
+                # print('found existing caption file:' + video_id)
                 continue
             print(video_id)  # 👉 TW-joGuPDQY
             try:
                 srt = YouTubeTranscriptApi.get_transcript(video_id)
             except Exception as e:
-                print(f'exception when downloading caption file {video_id}: {e}')
+                # print(f'exception when downloading caption file {video_id}: {e}')
                 continue
             # output = json.dumps(srt)
             output = self.convert_to_srt(srt)

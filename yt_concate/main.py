@@ -6,9 +6,9 @@ from yt_concate.pipeline.steps.step import StepException
 from yt_concate.pipeline.pipeline import Pipeline
 from yt_concate.pipeline.steps.preflight import Preflight
 from yt_concate.pipeline.steps.postflight import Postflight
+from yt_concate.pipeline.steps.read_caption import ReadCaption
 
 CHANNEL_ID = "UCKSVUHI9rbbkXhvAXK-2uxA"
-
 
 def main():
     inputs = {
@@ -18,6 +18,7 @@ def main():
         Preflight(),
         GetVideoList(),
         DownloadCaptions(),
+        ReadCaption(),
         Postflight(),
     ]
     utils = Utils()
