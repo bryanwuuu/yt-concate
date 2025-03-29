@@ -26,7 +26,7 @@ class DownloadCaptions(Step):
             except Exception as e:
                 # print(f'exception when downloading caption file {video_id}: {e}')
                 continue
-            # output = json.dumps(srt)
+            # outputs = json.dumps(srt)
             output = self.convert_to_srt(srt)
             # print(srt)
             # save the caption to a file named Output.txt
