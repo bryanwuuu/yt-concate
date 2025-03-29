@@ -10,18 +10,19 @@ from yt_concate.pipeline.steps.step import StepException
 from yt_concate.settings import CAPTIONS_DIR, VIDEOS_DIR
 class DownloadCaptions(Step):
     def process(self, data, inputs, utils):
-        for url in data:
+        for yt in data:
+            print('Test caption for ', yt.id)
             # source = YouTube(url)
             # en_caption = source.captions.get_by_language_code('en')
             # en_caption_convert_to_srt = (en_caption.generate_srt_captions())
-            query = urlparse(url).query
-            video_id = parse_qs(query)["v"][0]
-            if(utils.caption_file_exists(video_id)):
+            # query = urlparse(yt.url).query
+            # video_id = parse_qs(query)["v"][0]
+            if utils.caption_file_exists(yt):
                 # print('found existing caption file:' + video_id)
                 continue
-            print(video_id)  # 👉 TW-joGuPDQY
+            print(yt.url)  # 👉 TW-joGuPDQY
             try:
-                srt = YouTubeTranscriptApi.get_transcript(video_id)
+                srt = YouTubeTranscriptApi.get_transcript(yt.id)
             except Exception as e:
                 # print(f'exception when downloading caption file {video_id}: {e}')
                 continue
@@ -29,10 +30,11 @@ class DownloadCaptions(Step):
             output = self.convert_to_srt(srt)
             # print(srt)
             # save the caption to a file named Output.txt
-            text_file = open(utils.get_caption_filepath(video_id), "w",encoding='utf-8')
+            text_file = open(utils.get_caption_filepath(yt.url), "w",encoding='utf-8')
             text_file.write(output)
             text_file.close()
             # break
+        return data
 
     def format_time(self, seconds):
         td = datetime.timedelta(seconds=seconds)
