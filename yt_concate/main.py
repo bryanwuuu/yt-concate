@@ -29,6 +29,7 @@ def main():
         DownloadVideos(),
         Postflight(),
     ]
+    
     utils = Utils()
     p = Pipeline(steps)
     p.run(inputs,utils)
